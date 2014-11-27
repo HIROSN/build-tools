@@ -1,0 +1,19 @@
+{
+  "name": "build-tools",
+  "version": "1.0.0",
+  "description": "Build tools assignment.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/grunt-cli/bin/grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HIROSN/build-tools.git"
+  },
+  "author": "hirosn@live.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HIROSN/build-tools/issues"
+  },
+  "homepage": "https://github.com/HIROSN/build-tools"
+}
