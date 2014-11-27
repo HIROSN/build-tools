@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Open Now</title>
+    <link rel="stylesheet" href="foundation.min.css"/>
+    <script id="places-template" type="text/x-handlebars-template">
+      {{#each places}}
+      <div class="row">
+        <div class="large-8 large-centered columns">
+          <div class="row">
+            <div class="small-2 columns panel"><img src="{{icon}}"></div>
+            <div class="small-7 columns panel">{{name}}</div>
+            <div class="panel">{{openNow}}</div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </script>
+  </head>
+  <body>
+    <div id="places">
+    </div>
+    <script src="bundle.js"></script>
+  </body>
+</html>

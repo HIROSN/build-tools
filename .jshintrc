@@ -9,7 +9,8 @@
     "beforeEach" : false,
     "after"      : false,
     "afterEach"  : false,
-    "equal"      : false
+    "equal"      : false,
+    "navigator"  : false
   },
   "globalstrict": true,
   "quotmark": false,

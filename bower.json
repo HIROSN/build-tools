@@ -1,0 +1,28 @@
+{
+  "name": "build-tools",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/HIROSN/build-tools",
+  "authors": [
+    "Hiroshi Nagata <hirosn@live.com>"
+  ],
+  "description": "Build tools assignment.",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "mocha": "~2.0.1",
+    "chai": "~1.10.0"
+  },
+  "dependencies": {
+    "foundation": "~5.4.7",
+    "handlebars": "~2.0.0",
+    "jquery": "~2.1.1"
+  }
+}

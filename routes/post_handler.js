@@ -1,10 +1,12 @@
 'use strict';
 
 var request = require('superagent');
+var _ = require('lodash');
+
 var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
 var apiKey = process.env.GOOGLESERVERAPIKEY;
 
-var getHandler = function(req, res) {
+var postHandler = function(req, res) {
   if (!req.body)  { return res.status(500).json({}); }
   if (!req.body.latitude) { return res.status(500).json({}); }
   if (!req.body.longitude) { return res.status(500).json({}); }
@@ -21,12 +23,20 @@ var getHandler = function(req, res) {
     query += '&types=' + req.body.types;
   }
 
-  request.
-    get(url + 'key=' + apiKey + query).
-    end(function(err, data) {
-      if (err || !data) { return res.status(500).json({}); }
-      res.json(JSON.parse(data.text));
-    });
+  request.get(url + 'key=' + apiKey + query).end(function(err, data) {
+    if (err || !data) { return res.status(500).json({}); }
+    var json = JSON.parse(data.text);
+    if (!json || !json.results) { return res.status(500).json({}); }
+
+    res.json({places: _.map(json.results, function(place) {
+      return {
+        icon: place.icon,
+        name: place.name,
+        openNow: (!place.opening_hours ? 'Unknown' :
+          place.opening_hours.open_now ? 'Yes' : 'No')
+      };
+    })});
+  });
 };
 
-module.exports = getHandler;
+module.exports = postHandler;

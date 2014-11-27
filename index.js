@@ -5,6 +5,6 @@ var app = express();
 
 app.use(require('body-parser').json());
 app.use(express.static(__dirname + '/public'));
-app.get('/api', require('./routes/get_handler'));
+app.post('/api', require('./routes/post_handler'));
 
 app.listen(process.env.PORT || 3000);
