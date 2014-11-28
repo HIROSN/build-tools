@@ -1,0 +1,29 @@
+body {
+  background-color: $background;
+}
+
+@mixin user-select($selection) {
+  -webkit-touch-callout: $selection;
+  -webkit-user-select: $selection;
+  -khtml-user-select: $selection;
+  -moz-user-select: $selection;
+  -ms-user-select: $selection;
+  user-select: $selection;
+}
+
+div, h2 {
+  color: $textColor;
+  cursor: default;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -ms-touch-action: none;
+  @include user-select(none);
+}
+
+h2, .openNow {
+  text-align: center;
+}
+
+img {
+  height: 1.5em;
+}

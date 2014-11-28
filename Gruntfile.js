@@ -15,6 +15,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-css');
 
   grunt.initConfig({
@@ -85,6 +86,14 @@ module.exports = function(grunt) {
       }
     },
 
+    sass: {
+      dist: {
+        files: {
+          'public/stylesheet.css': 'app/css/stylesheet.scss'
+        }
+      }
+    },
+
     cssmin: {
       target: {
         src: 'bower_components/foundation/css/foundation.css',
@@ -102,6 +111,7 @@ module.exports = function(grunt) {
     'copy:map',
     'browserify:dev',
     'browserify:test',
+    'sass',
     'cssmin'
   ]);
 };

@@ -6,9 +6,14 @@ var Handlebars = require("./../bower_components/handlebars/handlebars.js");
 
 $(function() {
   var createJsonData = require('./js/create_json_data');
-  var radius = 500; // 500m for now
+  var radius = 5000; // 5km for now
 
-  createJsonData({radius: radius}, function(data) {
+  var params = {
+    radius: radius,
+    types: 'bakery|bar|cafe|food|meal_takeaway|restaurant'
+  };
+
+  createJsonData(params, function(data) {
     var dfd = $.Deferred();
 
     $.ajax({
