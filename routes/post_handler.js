@@ -29,11 +29,16 @@ var postHandler = function(req, res) {
     if (!json || !json.results) { return res.status(500).json({}); }
 
     res.json({places: _.map(json.results, function(place) {
+      var url = place.geometry && place.geometry.location && (
+        'https://maps.google.com/maps?q=' + place.geometry.location.lat +
+        ',' + place.geometry.location.lng);
+
       return {
         icon: place.icon,
         name: place.name,
         openNow: (!place.opening_hours ? 'Unknown' :
-          place.opening_hours.open_now ? 'Yes' : 'No')
+          place.opening_hours.open_now ? 'Yes' : 'No'),
+        url: url
       };
     })});
   });
