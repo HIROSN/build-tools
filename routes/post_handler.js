@@ -39,7 +39,7 @@ var postHandler = function(req, res) {
       return {
         icon: icon,
         name: place.name,
-        openNow: (!place.opening_hours ? 'Unknown' :
+        openNow: (!place.opening_hours ? '??' :
           place.opening_hours.open_now ? 'Yes' : 'No'),
         url: url
       };
