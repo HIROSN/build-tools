@@ -2,19 +2,24 @@ body {
   background-color: $background;
 }
 
-div, h2 {
+div {
   color: $textColor;
-  cursor: default;
 }
 
 h2 {
+  @extend div;
   text-align: center;
+  cursor: default;
+}
+
+img {
+  height: 1.5em;
 }
 
 .openNow {
   text-align: right;
 }
 
-img {
-  height: 1.5em;
+.row {
+  cursor: pointer;
 }

@@ -2,14 +2,17 @@ body {
   background-color: white; }
 
 div, h2 {
-  color: black;
-  cursor: default; }
+  color: black; }
 
 h2 {
-  text-align: center; }
+  text-align: center;
+  cursor: default; }
+
+img {
+  height: 1.5em; }
 
 .openNow {
   text-align: right; }
 
-img {
-  height: 1.5em; }
+.row {
+  cursor: pointer; }

@@ -9,13 +9,14 @@
     <script id="places-template" type="text/x-handlebars-template">
       {{#each places}}
       <div class="large-8 large-centered columns">
-        <div class="row panel">
-          <div class="small-2 columns"><img src="{{icon}}"
-            align="right"></div>
-          <div class="small-7 columns"><a target="_blank"
-            href="{{url}}">{{name}}</a></div>
-          <div class="openNow">{{openNow}}</div>
-        </div>
+        <a target="_blank" href="{{url}}">
+          <div class="row panel">
+            <div class="small-2 columns"><img src="{{icon}}"
+              align="right"></div>
+            <div class="small-7 columns">{{name}}</div>
+            <div class="openNow">{{openNow}}</div>
+          </div>
+        </a>
       </div>
       {{/each}}
     </script>
