@@ -28,10 +28,10 @@ $(function() {
     dfd.promise().then(function(results) {
       var template = Handlebars.compile($('#places-template').html());
 
-      $(template(results)).
-        hide().
-        appendTo($('#places')).
-        slideDown('fast');
+      $(template(results))
+      .hide()
+      .appendTo($('#places'))
+      .slideDown('fast');
     });
   });
 });

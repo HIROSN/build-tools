@@ -9,9 +9,9 @@ chai.use(require('chai-http'));
 
 describe('API tests', function() {
   it('should return status 500 for empty request', function(done) {
-    chai.request(server).
-    post('/api').
-    end(function(err, res) {
+    chai.request(server)
+    .post('/api')
+    .end(function(err, res) {
       expect(err).equals(null);
       expect(res).to.be.a('object');
       expect(res).to.have.status(500);
@@ -25,14 +25,14 @@ describe('API tests', function() {
 
   it('should be able to find a place by name', function(done) {
     chai.request(server).
-    post('/api').
-    send({
+    post('/api')
+    .send({
       latitude: 47.6234456,
       longitude: -122.33601,
       radius: 500,
       name: 'Code Fellows'
-    }).
-    end(function(err, res) {
+    })
+    .end(function(err, res) {
       expect(err).equals(null);
       expect(res).to.be.a('object');
       expect(res).to.have.status(200);
