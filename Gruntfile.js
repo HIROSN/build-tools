@@ -50,13 +50,6 @@ module.exports = function(grunt) {
         src: ['**/*.html'],
         expand: true,
         dest: 'public/'
-      },
-
-      map: {
-        cwd: 'bower_components/jquery/dist/',
-        src: ['**/jquery.min.map'],
-        expand: true,
-        dest: 'public/'
       }
     },
 
@@ -106,7 +99,6 @@ module.exports = function(grunt) {
     'simplemocha',
     'clean:dev',
     'copy:dev',
-    'copy:map',
     'browserify:dev',
     'browserify:test',
     'sass',
