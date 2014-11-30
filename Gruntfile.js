@@ -64,9 +64,7 @@ module.exports = function(grunt) {
       dev: {
         src: [
           'app/**/*.js',
-          'app/js/**/*.js',
-          'bower_components/jquery/dist/jquery.min.js',
-          'bower_components/handlebars/handlebars.min.js'
+          'app/js/**/*.js'
         ],
         dest: 'public/bundle.js',
         options: {
