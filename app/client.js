@@ -5,7 +5,7 @@ var Handlebars = require('handlebars');
 
 $(function() {
   var createJsonData = require('./js/create_json_data');
-  var radius = 5000; // 5km for now
+  var radius = 500; // 500m for now
 
   var params = {
     radius: radius,
