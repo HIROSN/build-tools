@@ -3,7 +3,6 @@
 var request = require('superagent');
 var distance = require('google-distance');
 var async = require('async');
-var _ = require('lodash');
 
 var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
 var apiKey = process.env.GOOGLESERVERAPIKEY;
@@ -35,16 +34,32 @@ var postHandler = function(req, res) {
       var destination = place.geometry && place.geometry.location && (
         place.geometry.location.lat + ',' + place.geometry.location.lng);
 
-      place.distanceValue = radius;
-      if (json.results.length <= 1) { return done(null, place); }
+      var icon = place.icon && place.icon.replace(
+        new RegExp('http:', 'gi'), 'https:');
+
+      var openNow = !place.opening_hours ? '??' :
+        place.opening_hours.open_now ? 'Yes' : 'No';
+
+      var url = destination && (
+        'https://maps.google.com/maps?q=' + destination);
+
+      var result = {
+        icon: icon,
+        name: place.name,
+        openNow: openNow,
+        url: url,
+        distanceValue: radius
+      };
+
+      if (json.results.length <= 1) { return done(null, result); }
 
       distance.get({
         origin: origin,
         destination: destination
       },
       function(err, data) {
-        if (!err) { place.distanceValue = data.distanceValue; }
-        done(err, place);
+        if (!err) { result.distanceValue = data.distanceValue; }
+        done(err, result);
       });
     },
     function(err, results) {
@@ -54,24 +69,7 @@ var postHandler = function(req, res) {
         return a.distanceValue - b.distanceValue;
       });
 
-      res.json({places: _.map(results, function(place) {
-        var icon = place.icon && place.icon.replace(
-          new RegExp('http:', 'gi'), 'https:');
-
-        var openNow = !place.opening_hours ? '??' :
-          place.opening_hours.open_now ? 'Yes' : 'No';
-
-        var url = place.geometry && place.geometry.location && (
-          'https://maps.google.com/maps?q=' + place.geometry.location.lat +
-          ',' + place.geometry.location.lng);
-
-        return {
-          icon: icon,
-          name: place.name,
-          openNow: openNow,
-          url: url
-        };
-      })});
+      res.json({places: results});
     });
   });
 };
