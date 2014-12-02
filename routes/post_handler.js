@@ -1,6 +1,8 @@
 'use strict';
 
 var request = require('superagent');
+var distance = require('google-distance');
+var async = require('async');
 var _ = require('lodash');
 
 var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
@@ -13,9 +15,8 @@ var postHandler = function(req, res) {
   if (!req.body.radius) { return res.status(500).json({}); }
 
   var radius = process.env.RADIUS || req.body.radius;
-
-  var query = '&location=' + req.body.latitude + ',' + req.body.longitude +
-    '&radius=' + radius;
+  var origin = req.body.latitude + ',' + req.body.longitude;
+  var query = '&location=' + origin + '&radius=' + radius;
 
   if (req.body.name) {
     query += '&name=' + req.body.name;
@@ -30,22 +31,48 @@ var postHandler = function(req, res) {
     var json = JSON.parse(data.text);
     if (!json || !json.results) { return res.status(500).json({}); }
 
-    res.json({places: _.map(json.results, function(place) {
-      var icon = place.icon && place.icon.replace(
-        new RegExp('http:', 'gi'), 'https:');
+    async.map(json.results, function(place, done) {
+      var destination = place.geometry && place.geometry.location && (
+        place.geometry.location.lat + ',' + place.geometry.location.lng);
 
-      var url = place.geometry && place.geometry.location && (
-        'https://maps.google.com/maps?q=' + place.geometry.location.lat +
-        ',' + place.geometry.location.lng);
+      place.distanceValue = radius;
+      if (json.results.length <= 1) { return done(null, place); }
 
-      return {
-        icon: icon,
-        name: place.name,
-        openNow: (!place.opening_hours ? '??' :
-          place.opening_hours.open_now ? 'Yes' : 'No'),
-        url: url
-      };
-    })});
+      distance.get({
+        origin: origin,
+        destination: destination
+      },
+      function(err, data) {
+        if (!err) { place.distanceValue = data.distanceValue; }
+        done(err, place);
+      });
+    },
+    function(err, results) {
+      if (err) { return res.status(500).json({}); }
+
+      results.sort(function(a, b) {
+        return a.distanceValue - b.distanceValue;
+      });
+
+      res.json({places: _.map(results, function(place) {
+        var icon = place.icon && place.icon.replace(
+          new RegExp('http:', 'gi'), 'https:');
+
+        var openNow = !place.opening_hours ? '??' :
+          place.opening_hours.open_now ? 'Yes' : 'No';
+
+        var url = place.geometry && place.geometry.location && (
+          'https://maps.google.com/maps?q=' + place.geometry.location.lat +
+          ',' + place.geometry.location.lng);
+
+        return {
+          icon: icon,
+          name: place.name,
+          openNow: openNow,
+          url: url
+        };
+      })});
+    });
   });
 };
 
