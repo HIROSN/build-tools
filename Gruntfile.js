@@ -6,6 +6,7 @@ module.exports = function(grunt) {
     '!node_modules/**/*',
     '!bower_components/**/*',
     '!test/browser/**/*',
+    '!build/**/*',
     '!public/**/*'
   ];
 
@@ -13,9 +14,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jscs');
   grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-css');
 
   grunt.initConfig({
@@ -40,16 +42,7 @@ module.exports = function(grunt) {
 
     clean: {
       dev: {
-        src: ['public/']
-      }
-    },
-
-    copy: {
-      dev: {
-        cwd: 'app/',
-        src: ['**/*.html'],
-        expand: true,
-        dest: 'public/'
+        src: ['build/', 'public/']
       }
     },
 
@@ -59,7 +52,7 @@ module.exports = function(grunt) {
           'app/**/*.js',
           'app/js/**/*.js'
         ],
-        dest: 'public/bundle.js',
+        dest: 'build/bundle.js',
         options: {
           transform: ['debowerify']
         }
@@ -80,13 +73,38 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: {
-          'public/stylesheet.css': 'app/css/stylesheet.scss'
+          'build/stylesheet.css': 'app/css/stylesheet.scss'
+        }
+      }
+    },
+
+    uglify: {
+      target: {
+        files: {
+          'public/bundle.js': ['build/bundle.js']
+        }
+      }
+    },
+
+    htmlmin: {
+      dist: {
+        files: {
+          'public/index.html': 'app/index.html'
+        },
+        options: {
+          removeComments: true,
+          collapseWhitespace: true
         }
       }
     },
 
     cssmin: {
       target: {
+        src: 'build/stylesheet.css',
+        dest: 'public/stylesheet.css'
+      },
+
+      foundation: {
         src: 'bower_components/foundation/css/foundation.css',
         dest: 'public/foundation.min.css'
       }
@@ -98,10 +116,11 @@ module.exports = function(grunt) {
     'jscs',
     'simplemocha',
     'clean:dev',
-    'copy:dev',
     'browserify:dev',
     'browserify:test',
     'sass',
+    'uglify',
+    'htmlmin',
     'cssmin'
   ]);
 };

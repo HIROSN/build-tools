@@ -1,18 +1,1 @@
-body {
-  background-color: white; }
-
-div, h2 {
-  color: black; }
-
-h2 {
-  text-align: center;
-  cursor: default; }
-
-img {
-  height: 1.5em; }
-
-.openNow {
-  text-align: right; }
-
-.row {
-  cursor: pointer; }
+body{background-color:#fff}div,h2{color:#000}h2{text-align:center;cursor:default}img{height:1.5em}.openNow{text-align:right}.row{cursor:pointer}

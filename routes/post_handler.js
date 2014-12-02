@@ -12,8 +12,10 @@ var postHandler = function(req, res) {
   if (!req.body.longitude) { return res.status(500).json({}); }
   if (!req.body.radius) { return res.status(500).json({}); }
 
+  var radius = process.env.RADIUS || req.body.radius;
+
   var query = '&location=' + req.body.latitude + ',' + req.body.longitude +
-    '&radius=' + req.body.radius;
+    '&radius=' + radius;
 
   if (req.body.name) {
     query += '&name=' + req.body.name;
