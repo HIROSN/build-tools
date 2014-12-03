@@ -5,10 +5,14 @@ var Handlebars = require('handlebars');
 var createJsonData = require('./create_json_data');
 
 module.exports = function(radius) {
+  var $select = $('select');
+
   var params = {
     radius: radius,
     types: 'bakery|bar|cafe|food|meal_takeaway|restaurant'
   };
+
+  $select.attr('disabled', true);
 
   $('#places > div').slideUp('fast', function() {
     $(this).remove();
@@ -33,6 +37,9 @@ module.exports = function(radius) {
       .hide()
       .appendTo($('#places'))
       .slideDown('fast');
+    })
+    .always(function() {
+      $select.removeAttr('disabled');
     });
   });
 };
