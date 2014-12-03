@@ -48,6 +48,7 @@ var postHandler = function(req, res) {
         name: place.name,
         openNow: openNow,
         url: url,
+        distance: '',
         distanceValue: radius
       };
 
@@ -58,8 +59,10 @@ var postHandler = function(req, res) {
         destination: destination
       },
       function(err, data) {
-        if (!err) { result.distanceValue = data.distanceValue; }
-        done(err, result);
+        if (err) { done(err, result); }
+        result.distance = data.distance;
+        result.distanceValue = data.distanceValue;
+        done(null, result);
       });
     },
     function(err, results) {

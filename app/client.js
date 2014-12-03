@@ -1,37 +1,14 @@
 'use strict';
 
 var $ = require('jquery');
-var Handlebars = require('handlebars');
+var fillPlaces = require('./js/fill_places');
 
 $(function() {
-  var createJsonData = require('./js/create_json_data');
-  var radius = 500; // 500m for now
+  var $select = $('select');
+  fillPlaces(+$select.val());
 
-  var params = {
-    radius: radius,
-    types: 'bakery|bar|cafe|food|meal_takeaway|restaurant'
-  };
-
-  createJsonData(params, function(data) {
-    var dfd = $.Deferred();
-
-    $.ajax({
-      type: 'POST',
-      data: JSON.stringify(data),
-      contentType: 'application/json; charset=utf-8',
-      url: '/api',
-      dataType: 'json',
-      success: dfd.resolve,
-      error: dfd.reject
-    });
-
-    dfd.promise().then(function(results) {
-      var template = Handlebars.compile($('#places-template').html());
-
-      $(template(results))
-      .hide()
-      .appendTo($('#places'))
-      .slideDown('fast');
-    });
+  $select.on('change', function() {
+    $select.blur();
+    fillPlaces(+$select.val());
   });
 });

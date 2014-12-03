@@ -9,7 +9,7 @@
     <script id="places-template" type="text/x-handlebars-template">
       {{#each places}}
       <div class="large-8 large-centered columns">
-        <a target="_blank" href="{{url}}" title="{{distanceValue}}m">
+        <a target="_blank" href="{{url}}" title="{{distance}}">
           <div class="row panel">
             <div class="small-2 columns"><img src="{{icon}}"
               align="right"></div>
@@ -22,7 +22,21 @@
     </script>
   </head>
   <body>
-    <h2>Open Now</h2>
+    <div class="large-8 large-centered columns">
+      <div class="row">
+        <div class="large-10 columns">
+          <h2>Open Now</h2>
+        </div>
+        <div class="large-2 columns" align="right">
+          <select>
+            <option value="200">200m</option>
+            <option value="500">500m</option>
+            <option value="2000">2km</option>
+            <option value="5000">5km</option>
+          </select>
+        </div>
+      </div>
+    </div>
     <div id="places">
     </div>
     <script src="bundle.js"></script>
