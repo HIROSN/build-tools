@@ -8,3 +8,8 @@ PaaS: Heroku
 Dependencies: express, body-parser, async, superagent, google-distance
 
 Tests: chai-http, mocha (browser, manual)
+
+Demonstrates:
+- Bower, Sass, Minification
+- Foundation
+- Browserify Mocha/Chai tests
