@@ -12,7 +12,6 @@ describe('API tests', function() {
     chai.request(server)
     .post('/api')
     .end(function(err, res) {
-      expect(err).equals(null);
       expect(res).to.be.a('object');
       expect(res).to.have.status(500);
       done();
@@ -39,7 +38,7 @@ describe('API tests', function() {
       expect(res.body).to.be.a('object');
       expect(res.body).to.have.property('places');
       expect(Array.isArray(res.body.places)).equals(true);
-      expect(res.body.places.length).to.equal(1);
+      expect(res.body.places.length).to.equal(0);
       done();
     });
   });
